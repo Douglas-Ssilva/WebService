@@ -1,0 +1,1 @@
+Exceções no mundo SOAP são fault
