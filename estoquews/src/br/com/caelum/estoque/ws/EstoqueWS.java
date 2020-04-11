@@ -3,6 +3,7 @@ package br.com.caelum.estoque.ws;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -46,6 +47,12 @@ public class EstoqueWS {
 		return item;
 	}
 
+	@Oneway // esse método é de mão única, não devolve resposta
+	@WebMethod(operationName = "GerarRelatorio")
+	public void gerarRelatorio() {
+		System.out.println("Gerando relatório");
+	}
+
 //    <ns2:todosOsItensResponse xmlns:ns2="http://ws.estoque.caelum.com.br/">
 //       <itens>
 //          <item>
@@ -59,7 +66,7 @@ public class EstoqueWS {
 //	<soapenv>
 //	   <soapenv:Header/>
 //	   <soapenv:Body>
-//	      <ws:todosOsItens>
+//	      <ws:todosOsItens> //operation
 //	         <filtros>
 //	            <filtro>
 //	               <nome>?</nome>
@@ -70,11 +77,10 @@ public class EstoqueWS {
 //	   </soapenv:Body>
 //	</soapenv:Envelope>
 
-//	@WebMethod(operationName = "todosOsItens") // <operation name="getItens"> fica no wsdl, tag wrapper no soapUI
+//	@WebMethod(operationName = "todosOsItens")
 //	@ResponseWrapper(localName = "itens")
-//	@WebResult(name = "itens") // substituindo pela tag return que envelopa cada iten
-//	public List<Item> getAllItens(@WebParam(name = "filtros") Filtros filtros) { // @WebParam substitui o args no soap
-//		System.out.println("Chamando getItens()");
+//	@WebResult(name = "itens")
+//	public List<Item> getAllItens(@WebParam(name = "filtros") Filtros filtros) {
 //		return dao.todosItens();
 //	}
 }

@@ -1,1 +1,59 @@
 Exceções no mundo SOAP são fault
+
+No wsdl encontramos o portType que define as operations que o serviço provê, dentro dele há o message que por sua vez 
+contém os part que conseguimos ver o tipo de dados e nome dos atributos no xsd
+
+	<xsd:schema>
+		<xsd:import namespace="http://ws.estoque.caelum.com.br/" schemaLocation="http://localhost:9080/estoquews?xsd=1"/>
+	</xsd:schema>
+
+Dentro do xsd: 
+	<xs:complexType name="item">
+		<xs:sequence>
+			<xs:element name="codigo" type="xs:string"/>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="quantidade" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+
+WSDL abstrato é tudo que encontramos na tag type até portType
+WSDL concreta é da tag binding p baixo. 
+Cada mensagem representa um entrada ou saída.
+
+RPC enviamos o nome do método juntos com os dados
+Document não envia o nome dos dados, porém se usamos o WRRAPED com document, conseguimos fazer um RPC disfarçado
+
+Produzir um serviço a partir de um WSDL é chamado de Contract first.
+Gerar o WSDL a partir de uma classe Java, ou seja implementar primeiro o serviço (e o resto é gerado) é chamado do Contract last.
+
+A partir de um wsdl criarei um cliente: 
+- Ir até à pasta do projeto
+- wsimport -s src -p br.com.caelum.estoque.cliente    http://localhost:8080/estoque/EstoqueWS?wsdl
+
+Contract first:
+-sh wsconsume.sh -k -n -o /Users/nico/workspace/estoque-web/src /Users/nico/workspace/estoque-web/src/EstoqueWSServiceCap5.wsdl
+
+O Port é o objeto que se comunica com o serviço remotamente. Ele abstrai todos os detalhes como estabelecer a conexão HTTP e gerar a mensagem SOAP.
+No mundo de padrões de projeto esse objeto também é chamado de Proxy ou Remote Proxy. Vimos a definição do port no WSDL dentro da seção service:
+	<service name="EstoqueWSService">
+	    <port name="EstoqueWSPort" binding="tns:EstoqueWSPortBinding">
+	      <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+	    </port>
+  	</service>
+  	
+wsimport e wsdl2java são ferramentas de linha de comando para gerar as classes Java a partir do WSDL. As classes geradas ajudam escrever 
+programas no lado do cliente ou servidor para serviços Web e abstraiam todo o trabalho com SOAP e HTTP em geral. Essas classes também são 
+chamadas de stubs de cliente ou esqueletos de servidores.
+
+
+
+
+
+
+
+
+
+
+
